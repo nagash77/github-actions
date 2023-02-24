@@ -9,9 +9,9 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     env:
-      DAYS_BEFORE_ISSUE_STALE: 10
-      DAYS_BEFORE_PR_STALE: 10
-      DAYS_BEFORE_CLOSE: 1
+      DAYS_BEFORE_ISSUE_STALE: '10'
+      DAYS_BEFORE_PR_STALE: '10'
+      DAYS_BEFORE_CLOSE: '1'
     steps:
       - uses: actions/stale@v7
         with:
