@@ -23,7 +23,7 @@ on:
         required: false
         default: 'type: feature,type: enhancement,Popular Issue'
   schedule:
-    - cron: '30 1 * * *'
+    - cron: '* * * * *'
 permissions:
   issues: write
   pull-requests: write
