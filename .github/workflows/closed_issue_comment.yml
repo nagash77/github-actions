@@ -22,6 +22,18 @@ jobs:
       $(( $(date +%s -d "${{ github.event.issue.closed_at }}" ) - $(date +%s -d "${{ github.event.comment.created_at }}" ) )) -ge 20 ]]
     runs-on: ubuntu-latest
     steps:
+      - name: Print date difference
+        run: |
+          closed_at=$(date +%s -d "${{ github.event.issue.closed_at }}")
+          created_at=$(date +%s -d "${{ github.event.comment.created_at }}")
+          diff=$((closed_at - created_at))
+          echo "closed_at: $closed_at"
+          echo "created_at: $created_at"
+          echo "diff: $diff"
+        if: |
+          [[ "${{ github.event.sender.login }}" != "github-actions[bot]" &&
+          "${{ github.event.sender.login }}" != "cypress-bot[bot]" &&
+          $(( $(date +%s -d "${{ github.event.issue.closed_at }}" ) - $(date +%s -d "${{ github.event.comment.created_at }}" ) )) -ge 20 ]]
       - name: Get project data
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
