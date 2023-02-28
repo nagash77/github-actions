@@ -28,6 +28,7 @@ jobs:
           echo "created_at: $created_at"
           echo "diff: $diff"
           echo "eval_result: $eval_result"
+          echo "true or false: $(eval_result > 0)"
         if: |
           [[ "${{ github.event.sender.login }}" != "github-actions[bot]" &&
           "${{ github.event.sender.login }}" != "cypress-bot[bot]" &&
