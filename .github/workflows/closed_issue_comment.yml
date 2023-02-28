@@ -18,8 +18,7 @@ jobs:
   move-to-new-issue-status:
     if: |
       [[ "${{ github.event.sender.login }}" != "github-actions[bot]" &&
-      "${{ github.event.sender.login }}" != "cypress-bot[bot]" &&
-      $(( $(date +%s -d "${{ github.event.issue.closed_at }}" ) - $(date +%s -d "${{ github.event.comment.created_at }}" ) )) -ge 20 ]]
+      "${{ github.event.sender.login }}" != "cypress-bot[bot]"]]
     runs-on: ubuntu-latest
     steps:
       - name: Get project data
