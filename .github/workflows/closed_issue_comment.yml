@@ -1,5 +1,10 @@
 name: 'Triage: closed issue comment'
 on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue Number'     
+        required: true
   # makes this workflow reusable
   workflow_call:
     secrets:
@@ -64,7 +69,7 @@ jobs:
                   }
                 }
               }
-            }' -f user=$USER -f repo=$REPOSITORY -F issue=$ISSUE_NUMBER -F project=$PROJECT_NUMBER > project_data.json
+            }' -f user=$USER -f repo=$REPOSITORY -F issue=${{ github.event.inputs.issue_number || ISSUE_NUMBER }} -F project=$PROJECT_NUMBER > project_data.json
 
           echo 'PROJECT_ID='$(jq -r '.data.user.repository.issue.projectItems.nodes[].fieldValueByName.field.project | select(.number == ${{ env.PROJECT_NUMBER }}) | .id' project_data.json) >> $GITHUB_ENV
           echo 'PROJECT_ITEM_ID='$(jq -r '.data.user.repository.issue.projectItems.nodes[] | select(.fieldValueByName.field.project.number == ${{ env.PROJECT_NUMBER }}) | .id' project_data.json) >> $GITHUB_ENV
