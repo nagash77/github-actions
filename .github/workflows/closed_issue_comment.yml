@@ -28,7 +28,7 @@ jobs:
           echo "created_at: $created_at"
           echo "diff: $diff"
           echo "eval_result: $eval_result"
-          echo "true or false: $((eval_result > 0))"
+          echo "true or false: ${{ eval_result > 0 }}"
         
       - name: Get project data
         if: |
