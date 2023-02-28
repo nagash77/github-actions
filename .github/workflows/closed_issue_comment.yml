@@ -20,6 +20,15 @@ jobs:
     steps:
       - name: Print date difference
         run: |
+          echo "closed_at: ${{ github.event.issue.closed_at }}"
+          echo "created_at: ${{ github.event.comment.created_at }}"
+          closed_ts=$(date +%s -d "${{ github.event.issue.closed_at }}")
+          created_ts=$(date +%s -d "${{ github.event.comment.created_at }}")
+          echo "closed_ts: $closed_ts"
+          echo "created_ts: $created_ts"
+          diff=$((closed_ts - created_ts))
+          echo "diff: $diff"
+
           closed_at=$(date +%s -d "${{ github.event.issue.closed_at }}")
           created_at=$(date +%s -d "${{ github.event.comment.created_at }}")
           diff=$((closed_at - created_at))
