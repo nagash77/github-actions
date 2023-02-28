@@ -13,7 +13,6 @@ jobs:
     if: |
       !github.event.issue.pull_request &&
       github.event.issue.state == 'closed' &&
-      ${{ github.event.comment.created_at | iso8601date | minus: github.event.issue.closed_at | iso8601date | abs | ge: 20 }} &&
       github.event.sender.login != 'cypress-bot[bot]' &&
       github.event.sender.login != 'github-actions[bot]'
     runs-on: ubuntu-latest
