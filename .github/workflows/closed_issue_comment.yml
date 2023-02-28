@@ -11,8 +11,9 @@ on:
       WORKFLOW_BOT_TOKEN:
         required: true
   issue_comment:
-    types:
-      - created
+    types: [created]
+  issues:
+    types: [closed]
 jobs:
   move-to-new-issue-status:
     if: |
