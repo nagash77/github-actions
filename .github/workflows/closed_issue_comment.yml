@@ -29,11 +29,12 @@ jobs:
           echo "diff: $diff"
           echo "eval_result: $eval_result"
           echo "true or false: $((eval_result > 0))"
+        
+      - name: Get project data
         if: |
           [[ "${{ github.event.sender.login }}" != "github-actions[bot]" &&
           "${{ github.event.sender.login }}" != "cypress-bot[bot]" &&
           $(( ($(date +%s -d "${{ github.event.issue.closed_at }}" ) - $(date +%s -d "${{ github.event.comment.created_at }}" )) > 20))]]
-      - name: Get project data
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
           USER: 'nagash77'
