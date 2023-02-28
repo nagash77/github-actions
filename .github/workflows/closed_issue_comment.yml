@@ -12,15 +12,13 @@ on:
         required: true
   issue_comment:
     types: [created]
-  issues:
-    types: [closed]
+    issues:
+      types: [closed]
 jobs:
   move-to-new-issue-status:
     if: |
-      !github.event.issue.pull_request &&
-      github.event.issue.state == 'closed' &&
-      github.event.sender.login != 'cypress-bot[bot]' &&
-      github.event.sender.login != 'github-actions[bot]'
+      [[ "${{ github.event.sender.login }}" != "github-actions[bot]" &&
+      "${{ github.event.sender.login }}" != "cypress-bot[bot]"]]
     runs-on: ubuntu-latest
     steps:
       - name: Get project data
