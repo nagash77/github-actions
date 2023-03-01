@@ -39,7 +39,7 @@ jobs:
      
       - name: Get project data
         if: |
-          env.LAST_COMMENT_CLOSE_TIME_DIFF  == '1' &&
+          "${{ env.LAST_COMMENT_CLOSE_TIME_DIFF }}" == '1' &&
           "${{ github.event.sender.login }}" != "github-actions[bot]" &&
           "${{ github.event.sender.login }}" != "cypress-bot[bot]"
         env:
