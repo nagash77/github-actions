@@ -32,7 +32,7 @@ jobs:
           closed_at=$(date +%s -d "${{ github.event.issue.closed_at }}")
           created_at=$(date +%s -d "${{ github.event.comment.created_at }}")
           diff=$((closed_at - created_at))
-          eval_result=$(( ($(date +%s -d "${{ github.event.issue.closed_at }}" ) - $(date +%s -d "${{ github.event.comment.created_at }}" )) > 20))
+          eval_result=$(( abs($(date +%s -d "${{ github.event.issue.closed_at }}" ) - $(date +%s -d "${{ github.event.comment.created_at }}" )) > 20))
           echo "closed_at: $closed_at"
           echo "created_at: $created_at"
           echo "diff: $diff"
