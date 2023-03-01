@@ -18,30 +18,16 @@ jobs:
   move-to-new-issue-status:
     runs-on: ubuntu-latest
     steps:
-      - name: Print date difference
+      - name: get date difference
         run: |
-          echo "closed_at: ${{ github.event.issue.closed_at }}"
-          echo "created_at: ${{ github.event.comment.created_at }}"
-          closed_ts=$(date +%s -d "${{ github.event.issue.closed_at }}")
-          created_ts=$(date +%s -d "${{ github.event.comment.created_at }}")
-          echo "closed_ts: $closed_ts"
-          echo "created_ts: $created_ts"
-          diff=$((created_ts - closed_ts))
-          echo "diff: $diff"
-
           eval_result=$(( ($(date +%s -d "${{ github.event.comment.created_at }}" ) - $(date +%s -d "${{ github.event.issue.closed_at }}" )) > 20))
-          echo "closed_at: $closed_at"
-          echo "created_at: $created_at"
-          echo "diff: $diff"
-          echo "eval_result: $eval_result"
-          echo "true or false: $((eval_result  > 0))"
           echo 'LAST_COMMENT_CLOSE_TIME_DIFF='$eval_result >> $GITHUB_ENV
      
       - name: Get project data
         if: |
           github.event.sender.login != 'cypress-bot[bot]' &&
-          ((date +%s -d github.event.comment.created_at ) - (date +%s -d github.event.issue.closed_at )) > 20 && 
-          github.event.sender.login != 'github-actions[bot]'  
+          env.LAST_COMMENT_CLOSE_TIME_DIFF == '1' && 
+          github.event.sender.login != 'github-actions[bot]'   
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
           USER: 'nagash77'
