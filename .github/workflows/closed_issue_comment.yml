@@ -41,10 +41,7 @@ jobs:
           echo 'LAST_COMMENT_CLOSE_TIME_DIFF='$eval_result >> $GITHUB_ENV
      
       - name: Get project data
-        if: |
-          "${{ github.event.sender.login }}" != "github-actions[bot]" &&
-          "${{ github.event.sender.login }}" != "cypress-bot[bot]" &&
-          env.LAST_COMMENT_CLOSE_TIME_DIFF + 0 == 1
+        if: env.LAST_COMMENT_CLOSE_TIME_DIFF  == '1'
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
           USER: 'nagash77'
