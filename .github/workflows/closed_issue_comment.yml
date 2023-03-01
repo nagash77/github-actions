@@ -40,7 +40,7 @@ jobs:
       - name: Get project data
         if: |
           github.event.sender.login != 'cypress-bot[bot]' &&
-          ($(date +%s -d github.event.comment.created_at ) - $(date +%s -d github.event.issue.closed_at )) > 20 && 
+          ((date +%s -d github.event.comment.created_at ) - (date +%s -d github.event.issue.closed_at )) > 20 && 
           github.event.sender.login != 'github-actions[bot]'  
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
