@@ -28,7 +28,7 @@ jobs:
         github.event.sender.login != 'github-actions[bot]'
     - name: Get project data
       env:
-        GITHUB_TOKEN: ${{ secrets.ADD_TO_TRIAGE_BOARD_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
         ORGANIZATION: 'cypress-io'
         REPOSITORY: ${{ github.event.repository.name }}
         PROJECT_NUMBER: 9
