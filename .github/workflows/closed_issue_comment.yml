@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Make sure comment was added more than 20 seconds after issue closed
-        if: github.event_name != 'pull_request'
         run: |
           time_diff=$(($(date +%s -d "${{ github.event.comment.created_at }}" ) - $(date +%s -d "${{ github.event.issue.closed_at }}" )))
           echo 'COMMENT_ADDED_AFTER_CLOSE='$(($time_diff > 20)) >> $GITHUB_ENV
@@ -27,9 +26,10 @@ jobs:
           PROJECT_NUMBER: 2
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         if: |
-          github.event.sender.login != 'cypress-bot[bot]' &&
           env.COMMENT_ADDED_AFTER_CLOSE == '1' && 
-          github.event.sender.login != 'github-actions[bot]'
+          github.event.sender.login != 'cypress-bot[bot]' &&
+          github.event.sender.login != 'github-actions[bot]' &&
+          github.event.issue.pull_request == null
         run: |
           gh api graphql -f query='
             query($user: String!, $repo: String!, $project: Int!, $issue: Int!) {
