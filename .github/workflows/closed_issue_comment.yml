@@ -20,8 +20,8 @@ jobs:
     steps:
       - name: get date difference
         run: |
-          eval_result=$(( ($(date +%s -d "${{ github.event.comment.created_at }}" ) - $(date +%s -d "${{ github.event.issue.closed_at }}" )) > 20)) #verify that the last comment was added more than 20 seconds after close date
-          echo 'LAST_COMMENT_CLOSE_TIME_DIFF='$eval_result >> $GITHUB_ENV
+          time_diff=$(date +%s -d "${{ github.event.comment.created_at }}" ) - $(date +%s -d "${{ github.event.issue.closed_at }}" ) #verify that the last comment was added more than 20 seconds after close date
+          echo 'LAST_COMMENT_CLOSE_TIME_DIFF='$(( $time_diff > 20 )) >> $GITHUB_ENV
      
       - name: Get project data
         if: |
