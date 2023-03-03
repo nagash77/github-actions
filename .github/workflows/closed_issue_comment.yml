@@ -32,7 +32,7 @@ jobs:
         run: |
           gh api graphql -f query='
             query($user: String!, $repo: String!, $project: Int!, $issue: Int!) {
-              user(login: $org) {
+              user(login: $user) {
                 repository(name: $repo) {
                   issue(number: $issue) {
                     projectItems(first: 10, includeArchived: false) {
@@ -71,11 +71,11 @@ jobs:
               }
             }' -f user=$USER -f repo=$REPOSITORY -F issue=$ISSUE_NUMBER -F project=$PROJECT_NUMBER > project_data.json
 
-          echo 'PROJECT_ID='$(jq -r '.data.organization.repository.issue.projectItems.nodes[].fieldValueByName.field.project | select(.number == ${{ env.PROJECT_NUMBER }}) | .id' project_data.json) >> $GITHUB_ENV
-          echo 'PROJECT_ITEM_ID='$(jq -r '.data.organization.repository.issue.projectItems.nodes[] | select(.fieldValueByName.field.project.number == ${{ env.PROJECT_NUMBER }}) | .id' project_data.json) >> $GITHUB_ENV
-          echo 'STATUS_FIELD_ID='$(jq -r '.data.organization.projectV2.field | .id' project_data.json) >> $GITHUB_ENV
+          echo 'PROJECT_ID='$(jq -r '.data.user.repository.issue.projectItems.nodes[].fieldValueByName.field.project | select(.number == ${{ env.PROJECT_NUMBER }}) | .id' project_data.json) >> $GITHUB_ENV
+          echo 'PROJECT_ITEM_ID='$(jq -r '.data.user.repository.issue.projectItems.nodes[] | select(.fieldValueByName.field.project.number == ${{ env.PROJECT_NUMBER }}) | .id' project_data.json) >> $GITHUB_ENV
+          echo 'STATUS_FIELD_ID='$(jq -r '.data.user.projectV2.field | .id' project_data.json) >> $GITHUB_ENV
           echo 'STATUS='$(jq -r '.data.organization.repository.issue.projectItems.nodes[].fieldValueByName | select(.field.project.number == ${{ env.PROJECT_NUMBER }}) | .name' project_data.json) >> $GITHUB_ENV
-          echo 'NEW_ISSUE_OPTION_ID='$(jq -r '.data.organization.projectV2.field.options[] | select(.name== "New Issue") | .id' project_data.json) >> $GITHUB_ENV
+          echo 'NEW_ISSUE_OPTION_ID='$(jq -r '.data.user.projectV2.field.options[] | select(.name== "New Issue") | .id' project_data.json) >> $GITHUB_ENV
       - name: Move issue to New Issue status
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
