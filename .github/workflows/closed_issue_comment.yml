@@ -20,8 +20,8 @@ jobs:
     steps:
     - name: Make sure comment was added more than 20 seconds after issue closed
       run: |
-        time_diff=$(($(date +%s -d "${{ github.event.comment.created_at }}" ) - $(date +%s -d "${{ github.event.issue.closed_at }}" )))
-        echo 'COMMENT_ADDED_AFTER_CLOSE='$(($time_diff > 20)) >> $GITHUB_ENV
+        time_diff=$(( $(date +%s -d "${{ github.event.comment.created_at }}" ) - $(date +%s -d "${{ github.event.issue.closed_at }}" ) ))
+        echo 'COMMENT_ADDED_AFTER_CLOSE='$(( $time_diff > 20 )) >> $GITHUB_ENV
       if: |
         env.COMMENT_ADDED_AFTER_CLOSE == '1' && 
         github.event.sender.login != 'cypress-bot[bot]' &&
