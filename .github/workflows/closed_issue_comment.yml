@@ -18,22 +18,21 @@ jobs:
   move-to-new-issue-status:
     runs-on: ubuntu-latest
     steps:
-      - name: get date difference
-        run: |
-          eval_result=$(( ($(date +%s -d "${{ github.event.comment.created_at }}" ) - $(date +%s -d "${{ github.event.issue.closed_at }}" )) > 20)) #verify that the last comment was added more than 20 seconds after close date
-          echo 'LAST_COMMENT_CLOSE_TIME_DIFF='$eval_result >> $GITHUB_ENV
-     
-      - name: Get project data
-        if: |
-          github.event.sender.login != 'cypress-bot[bot]' &&
-          env.LAST_COMMENT_CLOSE_TIME_DIFF == '1' && 
-          github.event.sender.login != 'github-actions[bot]'   
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
-          USER: 'nagash77'
-          REPOSITORY: ${{ github.event.repository.name }}
-          PROJECT_NUMBER: 2
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+    - name: Make sure comment was added more than 20 seconds after issue closed
+      run: |
+        time_diff=$(($(date +%s -d "${{ github.event.comment.created_at }}" ) - $(date +%s -d "${{ github.event.issue.closed_at }}" )))
+        echo 'COMMENT_ADDED_AFTER_CLOSE='$(($time_diff > 20)) >> $GITHUB_ENV
+      if: |
+        env.COMMENT_ADDED_AFTER_CLOSE == '1' && 
+        github.event.sender.login != 'cypress-bot[bot]' &&
+        github.event.sender.login != 'github-actions[bot]' 
+    - name: Get project data
+      env:
+        GITHUB_TOKEN: ${{ secrets.ADD_TO_TRIAGE_BOARD_TOKEN }}
+        ORGANIZATION: 'cypress-io'
+        REPOSITORY: ${{ github.event.repository.name }}
+        PROJECT_NUMBER: 9
+        ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
           gh api graphql -f query='
             query($user: String!, $repo: String!, $project: Int!, $issue: Int!) {
