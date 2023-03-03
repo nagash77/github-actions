@@ -21,7 +21,7 @@ jobs:
       - name: Get project data
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
-          ORGANIZATION: 'cypress-io'
+          ORGANIZATION: 'nagash77'
           REPOSITORY: ${{ github.event.repository.name }}
           PROJECT_NUMBER: 9
           ISSUE_NUMBER: ${{ github.event.issue.number }}
