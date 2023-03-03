@@ -12,6 +12,7 @@ on:
 jobs:
   move-to-new-issue-status:
     runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
     steps:
       - name: Make sure comment was added more than 20 seconds after issue closed
         run: |
