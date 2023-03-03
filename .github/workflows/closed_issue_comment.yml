@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
           ORGANIZATION: 'nagash77'
           REPOSITORY: ${{ github.event.repository.name }}
-          PROJECT_NUMBER: 9
+          PROJECT_NUMBER: 2
           ISSUE_NUMBER: ${{ github.event.issue.number }}
         if: |
           github.event.sender.login != 'cypress-bot[bot]' &&
