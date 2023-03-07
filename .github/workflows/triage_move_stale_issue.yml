@@ -2,8 +2,7 @@ name: 'Move stale issue to Awaiting Response'
 on:
   issues:
     types: [labeled]
-  pull_request:
-    types: [labeled]
+  
 jobs:
   add-to-triage-project-board:
     if: >-
