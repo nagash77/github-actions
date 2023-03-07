@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/add-to-project@v0.4.0
         with:
-          project-url: https://github.com/org/nagash77/github-actions/projects/2
+          project-url: https://github.com/orgs/nagash77/github-actions/projects/2
           github-token: ${{ secrets.WORKFLOW_BOT_TOKEN }}
      
       - uses: actions/github-script@v6
