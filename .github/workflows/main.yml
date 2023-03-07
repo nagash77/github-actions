@@ -1,18 +1,37 @@
-name: 'Add issue/PR to Triage Board'
+name: 'Triage: add issue/PR to project'
+
 on:
-  issues:
-    types: [labeled]
-  pull_request:
-    types: [labeled]
-    
+  # makes this workflow reusable
+  workflow_call:
+    inputs:
+      status:
+        description: 'Which status column?'
+        default: ''
+        required: false
+        type: string
+    secrets:
+      WORKFLOW_BOT_TOKEN:
+        required: true
+
 jobs:
-  add-to-triage-project-board:
-    if: >-
-      (
-        contains(github.event.pull_request.labels.*.name, 'stale') ||
-        contains(github.event.issue.labels.*.name, 'stale')
-      )
+  add-to-triage-project:
+    name: Add to triage project
     runs-on: ubuntu-latest
+    env:
+      PROJECT_NUMBER: 9
+      GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
     steps:
-      - name: output
-        run: echo 'I ran!'
+      - uses: actions/add-to-project@v0.4.0
+        with:
+          project-url: https://github.com/users/github-actions/projects/2}
+          github-token: ${{ secrets.WORKFLOW_BOT_TOKEN }}
+     
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["triage"]
+            })
