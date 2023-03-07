@@ -22,7 +22,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
           USER: 'nagash77'
           REPOSITORY: ${{ github.event.repository.name }}
-          PROJECT_NUMBER: 9
+          PROJECT_NUMBER: 2
           ISSUE_NUMBER: ${{ github.event.issue.number }}
 
         run: |
