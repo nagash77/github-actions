@@ -1,5 +1,9 @@
 name: 'Add issue/PR to Triage Board'
 on:
+  workflow_call:
+    secrets:
+      ADD_TO_TRIAGE_BOARD_TOKEN:
+        required: true
   issues:
     types:
       - opened
