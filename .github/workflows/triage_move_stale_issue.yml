@@ -7,11 +7,7 @@ on:
 
 jobs:
   add-to-triage-project-board:
-    if: >-
-      (
-        contains(github.event.pull_request.labels.*.name, 'stale') ||
-        contains(github.event.issue.labels.*.name, 'stale')
-      )
+    if: ( contains(github.event.pull_request.labels.*.name, 'stale') || contains(github.event.issue.labels.*.name, 'stale') )
     steps:
       - uses: nagash77/github-actions/.github/workflows/add_to_triage_board.yml@develop
         with:
