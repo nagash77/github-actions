@@ -15,6 +15,7 @@ jobs:
     uses: nagash77/github-actions/.github/workflows/add_to_triage_board.yml@main
     secrets: inherit
   update-status-to-awaiting-response:
+    needs: add-to-triage-project-board
     uses: nagash77/github-actions/.github/workflows/triage_update_status.yml@main
     with:
       status: 'Awaiting Response'
