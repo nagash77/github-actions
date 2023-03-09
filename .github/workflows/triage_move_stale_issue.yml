@@ -7,12 +7,15 @@ on:
 
 jobs:
   add-to-triage-project-board:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: nagash77/github-actions/.github/workflows/add_to_triage_board.yml@develop
-      with:
-        secrets: ${{ secrets }}
-    - uses: nagash77/github-actions/triage_update_status.yml@develop
-      with:
-        status: 'Awaiting Response'
-        secrets: ${{ secrets }}
+    if: >-
+      (
+        contains(github.event.pull_request.labels.*.name, 'stale') ||
+        contains(github.event.issue.labels.*.name, 'stale')
+      )
+    uses: nagash77/github-actions/.github/workflows/add_to_triage_board.yml@main
+    secrets: inherit
+  update-status-to-awaiting-response:
+    uses: nagash77/github-actions/.github/workflows/triage_update_status.yml@main
+    with:
+      status: 'Awaiting Response'
+    secrets: inherit
