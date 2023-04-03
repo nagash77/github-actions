@@ -21,7 +21,7 @@ jobs:
       PROJECT_NUMBER: 9
       GITHUB_TOKEN: ${{ secrets.WORKFLOW_BOT_TOKEN }}
     steps:
-      - uses: actions/add-to-project@v0.4.0
+      - uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/users/nagash77/projects/2
           github-token: ${{ secrets.WORKFLOW_BOT_TOKEN }}
